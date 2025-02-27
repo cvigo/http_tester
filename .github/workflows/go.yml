@@ -26,3 +26,9 @@ jobs:
           mkdir -p build/${{ matrix.os }}_${{ matrix.arch }}
           GOOS=${{ matrix.os == 'ubuntu-latest' && 'linux' || 'darwin' }} GOARCH=${{ matrix.arch }} go build -o build/${{ matrix.os }}_${{ matrix.arch }}/http_server http_server/main.go
           GOOS=${{ matrix.os == 'ubuntu-latest' && 'linux' || 'darwin' }} GOARCH=${{ matrix.arch }} go build -o build/${{ matrix.os }}_${{ matrix.arch }}/http_client http_client/main.go
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: binaries-${{ matrix.os }}-${{ matrix.arch }}
+          path: build/${{ matrix.os }}_${{ matrix.arch }}/
