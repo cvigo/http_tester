@@ -21,7 +21,7 @@ var RootCmd = &cobra.Command{
 	Run:     runCmd,
 	Short:   "Simple HTTP server for testing purposes",
 	Long:    `This simple tool listens on the indicated port and responds to POST requests on the /hello endpoint.`,
-	Example: `  http_server --port 8090`,
+	Example: `  http_server --port 8090 --logformat json`,
 }
 
 func hello(w http.ResponseWriter, req *http.Request) {
@@ -54,7 +54,7 @@ func hello(w http.ResponseWriter, req *http.Request) {
 }
 
 func setCommonFlags(cmd *cobra.Command) {
-	cmd.PersistentFlags().IntVarP(&port, "port", "p", 8090, "Interval between requests (regardless of the response time and number of clients)")
+	cmd.PersistentFlags().IntVarP(&port, "port", "p", 8090, "Port to listen on")
 	cmd.PersistentFlags().StringVarP(&logFormat, "logformat", "l", "console", "log format (console or json)")
 
 	_ = cmd.RegisterFlagCompletionFunc("logformat", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
